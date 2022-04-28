@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html-head">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!-- jquery -->
+    <script src="/js/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/reservation/reservation.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/images/logo.png}">
+    <meta charset="UTF-8">
+    <title>고릴라 캠핑&펜션</title>
+</head>
+<body>
+<div id="wrap">
+    <div id="header" th:fragment="header">
+        <a href="/gorilla/main/main_view">고릴라 캠핑&펜션</a>
+    </div>
+
+    <div id="nav" th:fragment="nav">
+        <ul>
+            <li><a href="#">안내글</a></li> <!-- 공지사항, 배치도, 오시는길 -->
+            <li><a href="#">시설안내</a></li>
+            <li><a href="#">캠핑</a></li>
+            <li><a href="#">펜션</a></li>
+            <li><a href="/gorilla/reservation/reservation_view">실시간예약</a></li>
+        </ul>
+    </div>
+    <div id="contents">CONTENTS</div>
+    <div id="footer" th:fragment="footer">
+        <span>Account:[농협 352-6440-7684-83] 박정균 Help 010-8024-5102
+주소지 경기 가평군 북면 제령아랫말길 67-61 (제령리, 펜션둥근해가)</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,214 @@
+/*
+##Device = Desktops
+##Screen = 1281px to higher resolution desktops
+##Device = 데스크탑
+##Screen = 1281px에서 1600px 사이
+*/
+@media (min-width: 1601px) and (max-width: 2000px) {
+    /*=========== 전역 스타일 ===========*/
+    body {
+        /*background: #c8e6c9;*/
+    }
+
+    /* ul li태그에 리스트 스타일을 없앰 */
+    ul li {
+        list-style: none;
+    }
+
+    /* a태그에 텍스트 밑줄을 없애고 색상을 #333 */
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    /*=========== common ===========*/
+    /* 전체 틀 div */
+    #wrap {
+        width: 1200px;
+        height: auto;
+        margin: 0 auto;
+        color: #fff;
+        text-align: center;
+    }
+
+    /* 메인 타이틀 div */
+    #header {
+        width: 100%;
+        height: 75px;
+        line-height: 80px;
+        /*background: #2e7d32;*/
+        position: relative;
+        font-size: 30px;
+    }
+
+    /* 메뉴 div */
+    #nav {
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        /*background: #388e3c;*/
+        position: relative;
+    }
+
+    /* ul태그를 nav안에 고정 */
+    #wrap > #nav > ul {
+        position: absolute;
+        margin: 0 auto;
+        width: 100%;
+        /*background: brown;*/
+        padding: 0;
+        height: 60px;
+    }
+
+    /* menu태그 자식의 ul의 자식 li를 왼쪽정렬과 넓이 140설정 */
+    #wrap > #nav > ul > li {
+        height: auto;
+        /*background-color: antiquewhite;*/
+        font: bold 16px "malgun gothic";
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* li 5개 */
+    #wrap > #nav > ul > li:first-child:nth-last-child(5),
+    #wrap > #nav > ul > li:first-child:nth-last-child(5) ~ li{
+        width: 17%;
+    }
+
+    /* li 6개 */
+    #wrap > #nav > ul > li:first-child:nth-last-child(6),
+    #wrap > #nav > ul > li:first-child:nth-last-child(6) ~ li{
+        width: 15%;
+    }
+
+    .contents{
+        float: left;
+        width: 100%;
+        height: 530px;
+        line-height: 600px;
+        /*background: #4caf50;*/
+    }
+
+    #footer{
+        float: left;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        /*background: #66bb6a;*/
+        font-size: 14px;
+    }
+
+}
+
+/*
+##Device = Desktops
+##Screen = 1281px to higher resolution desktops
+##Device = 데스크탑
+##Screen = 1281px에서 1600px 사이
+*/
+@media (min-width: 1281px) and (max-width: 1600px) {
+    /*=========== 전역 스타일 ===========*/
+    body {
+        /*background: #c8e6c9;*/
+    }
+
+    /* ul li태그에 리스트 스타일을 없앰 */
+    ul li {
+        list-style: none;
+    }
+
+    /* a태그에 텍스트 밑줄을 없애고 색상을 #333 */
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    /*=========== common ===========*/
+    /* 전체 틀 div */
+    #wrap {
+        width: 1200px;
+        height: auto;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    /* 메인 타이틀 div */
+    #header {
+        width: 100%;
+        height: 75px;
+        line-height: 80px;
+        position: relative;
+        font-size: 30px;
+        /*background: #2e7d32;*/
+    }
+
+    /* 메뉴 div */
+    #nav {
+        width: 100%;
+        height: 60px;
+        line-height: 30px;
+        position: relative;
+        background: #388e3c;
+    }
+
+    /* ul태그를 nav안에 고정 */
+    #wrap > #nav > ul {
+        width: 100%;
+        height: 60px;
+        margin: 0 auto;
+        padding: 0;
+        position: absolute;
+        /*background: brown;*/
+    }
+
+    /* menu태그 자식의 ul의 자식 li를 왼쪽정렬과 넓이 140설정 */
+    #wrap > #nav > ul > li {
+        height: auto;
+        background-color: antiquewhite;
+        font: bold 16px "malgun gothic";
+        display: inline-block;
+        text-align: center;
+    }
+
+    /* li 5개 */
+    #wrap > #nav > ul > li:first-child:nth-last-child(5),
+    #wrap > #nav > ul > li:first-child:nth-last-child(5) ~ li{
+        width: 17%;
+    }
+
+    /* li 6개 */
+    #wrap > #nav > ul > li:first-child:nth-last-child(6),
+    #wrap > #nav > ul > li:first-child:nth-last-child(6) ~ li{
+        width: 15%;
+    }
+
+    /* 컨텐츠 고정 */
+    .contents {
+        float: left;
+        width: 100%;
+        height: 530px;
+        line-height: 600px;
+        background: #4caf50;
+    }
+
+    #footer{
+        float: left;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        /*background: #66bb6a;*/
+        font-size: 14px;
+    }
+}
+
+
+/*
+##Device = Laptops, Desktops
+##Screen = B/w 1025px to 1280px
+##Device = 랩탑, 데스크탑
+##Screen = 1025px에서 1280px 사이
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+}
+
+

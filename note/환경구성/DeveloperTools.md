@@ -1,0 +1,47 @@
+GorillaCampProject Dependencies(https://appleg1226.tistory.com/12?category=864243)
+ ------------------------------
+- Spring Boot DevTools
+  - Devtools는 보통 스프링 어플리케이션을 띄웠을 때, 재시작하지 않고 코드의 변화를 반영시킬 때 사용합니다.
+  - HTML 파일의 경우 LiveReload 기능을 제공해, 저장하면 그 변화가 페이지에 바로 나타나게 할 수도 있습니다.
+  - 참고) velog.io/@bread_dd/Spring-Boot-Devtools
+- Lombok
+  - class에 getter, setter, toString, equals, hashcode, constructor, builder 패턴 메소드까지 어노테이션으로 간단하게 지정해줄 수 있음
+  - 자바 특유의 장황한 클래스를 줄여주는 좋은 툴.
+- Spring Configuration Processor
+  - 스프링 개발을 하면서 application.yaml 또는 application.properties를 작성할 이 기능을 쓰면 됩니다.
+  - 다만 intelliJ의 경우 Annotation Processor를 켜고 Spring assistant를 켜야 정상적으로 이용할 수 있습니다.
+  - 이외에도 내 클래스에 application 파일에 있는 설정값을 주입하고 싶다면 @ConfigurationProperties 를 사용해주면 됩니다.
+  - 참고) www.baeldung.com/spring-boot-configuration-metadata
+- Spring Web
+  - 내장 톰캣뿐 아니라, Spring MVC 패턴을 구현하는 데에 필요한 대부분의 기능들이 여기에 들어 있습니다.
+  - REST API 서버를 만든다면 필수적인 모듈입니다.
+- Spring Session
+  - 유저 세션을 다루는 API와 메서드들을 모아놓은 모듈입니다.
+- Thymeleaf
+  - Spring은 자체적으로 HTML 뷰를 내장하고 있음 그중에 1가지
+- Spring Security
+  - 회원관리에 필요한 것들이 대부분 들어가 있는 중요한 모듈입니다. 굉장히 다양한 방식으로 커스터마이징을 할 수 있습니다.
+- OAuth2 Client, OAuth2 Resource Server
+  - OAuth2는 요새 Security 관련해서는 거의 필수적인 기능으로 꼽히고 있습니다.
+- JDBC API
+  - Java JDBC를 스프링 환경에서 사용할 수 있게 해주는 기본 모듈입니다. 데이터베이스를 이용할 수 있는 가장 기초적인 방법을 제공합니다.
+- Mybatis Framework
+  - Mybatis는 XML 파일을 사용하여 Query문을 직접 작성하여 DB를 관리하는 프레임워크입니다. 스프링 환경에서 직접 지원하고 있는 Mybatis 모듈입니다.
+- Oracle Driver
+  - 각종 데이터베이스들의 연결 드라이버를 지원합니다. 여기에 필요한 것만 체크만 해주면 DB 연결 준비가 끝납니다.
+  - 이후에는 위의 JDBC나 JPA를 함께 추가하여 application.yaml에 세부 설정만 입력해주면 됩니다.
+- WebSocket
+  - WebSocket은 메시징큐는 아니고 새로운 프로토콜입니다. 기존 Http 통신과는 다르게 지속적 연결 방식의 통신 방식을 지원합니다.
+  - 스프링 WebSocket에서는 SocketJS, STOMP와 함께 사용하여 웹소켓 어플리케이션을 만들게 해줍니다.
+  - WebSocket은 채팅이나 유저들에게 실시간으로 정보를 업데이트 시켜줘야 할 때 유용할 것으로 보입니다.
+- Spring Batch
+  - 배치작업을 한다면 Spring Batch를 사용합시다. 배치가 무엇인지 궁금하신 분은 다음 링크를 참조하시기 바랍니다(jojoldu.tistory.com/324)
+  - 간단하게 설명하면 '주기적으로 대량의 데이터를 읽고 처리해서 다시 저장해야 하는 작업들' 을 보통 Batch라고 합니다.
+  - 하루 매출을 저장해서 통계 처리를 하고 메일을 보내거나 이런 것들이 대표적이죠
+- Validation
+  - Validation 모듈은 데이터 클래스의 필드에 어노테이션 통해 제약사항을 걸어주는 기능을 제공합니다.
+- Java Mail Sender
+  - 스프링에서 메일을 보낸다면 이걸 추가해서 개발하면 될 것 같습니다. 보낼 메일 주소를 설정하고, 해당 모듈의 메서드들을 이용하여 메일을 보낼 수 있습니다.
+- Quartz Scheduler
+  - 그렇지만 Quartz는 데이터베이스 지원, 플러그인, 클러스터링 등 다양한 기능을 제공합니다. 좀 더 정교한 스케줄러를 원한다면 사용하면 될 것 같습니다.
+  - 참고) stackoverflow.com/questions/4385719/spring-scheduling-scheduled-vs-quartz

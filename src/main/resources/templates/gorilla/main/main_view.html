@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="gorilla/fragments/common :: html-head">
+</head>
+<body>
+<div id="wrap">
+    <div th:replace="gorilla/fragments/common :: header"></div>
+    <div th:replace="gorilla/fragments/common :: nav"></div>
+    <div class="contents">
+        <a href="#"><img class="left_direction" src="/images/main/right_direction.png"></a>
+        <div class="images">
+            <img src="/images/main/1.jpg" data-hide="N">
+            <img src="/images/main/2.jpg" data-hide="Y" hidden>
+            <img src="/images/main/3.jpg" data-hide="Y" hidden>
+            <img src="/images/main/4.jpg" data-hide="Y" hidden>
+            <img src="/images/main/5.jpg" data-hide="Y" hidden>
+        </div>
+        <a href="#"><img class="right_direction" src="/images/main/right_direction.png"></a>
+    </div>
+    <div th:replace="gorilla/fragments/common :: footer"></div>
+</div>
+<script>
+    $(function () {
+        var images = $(".images img")
+        var lenght = images.length;
+        $(".contents").on("click", function (e) {
+            if (e.target.className === "right_direction") { /* 오른쪽 화살표 */
+                $.each(images, function (idx, data) {
+                    if (data.dataset.hide === 'N') {
+                        $(data).attr("hidden", true)
+                        data.dataset.hide = 'P'
+                        //마지막 사진인지 판단
+                        if (lenght - 1 == idx) {
+                            // 모든사진 정상화
+                            getBack(images, "right")
+                            return false
+                        }
+                    }
+                    if (data.dataset.hide === 'Y') {
+                        $(data).attr("hidden", false)
+                        data.dataset.hide = 'N'
+                        return false;
+                    }
+                })
+            } else if (e.target.className === "left_direction") { /* 왼쪽 화살표 */
+                $($(".images img").get().reverse()).each(function (idx, data) {
+                    if (data.dataset.hide === 'N') {
+                        data.dataset.hide = "Y"
+                        $(data).attr("hidden", true)
+                        if (lenght - 1 == idx) {
+                            // 모든사진 정상화
+                            getBack(images, "left")
+                            return false
+                        }
+                    }
+                    if (data.dataset.hide === 'P') {
+                        data.dataset.hide = "N"
+                        $(data).attr("hidden", false)
+                        return false
+                    }
+                })
+            }
+        })
+
+        function getBack(images, type) {
+            if (type === "right") {
+                $.each(images, function (idx, data) {
+                    if (idx === 0) {
+                        $(data).attr("hidden", false)
+                        data.dataset.hide = 'N'
+                    } else {
+                        data.dataset.hide = 'Y'
+                    }
+                })
+            }
+            if (type === "left") {
+                $($(".images img").get().reverse()).each(function (idx, data) {
+                    if (idx === 0) {
+                        $(data).attr("hidden", false)
+                        data.dataset.hide = 'N'
+                    } else {
+                        data.dataset.hide = 'P'
+                    }
+                })
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

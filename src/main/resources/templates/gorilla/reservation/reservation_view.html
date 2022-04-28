@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="gorilla/fragments/common :: html-head">
+</head>
+<body>
+<div id="wrap">
+    <div th:replace="gorilla/fragments/common :: header"></div>
+    <div th:replace="gorilla/fragments/common :: nav"></div>
+    <div class="contents">
+        <div class="chooseDate">
+            <ul>
+                <li>
+                    <sapn>숙박기간</sapn>
+                </li>
+                <li>
+                    <sapn>입실일</sapn>
+                    <input type="date" class="startDate">
+                </li>
+                <li>
+                    <sapn>퇴실일</sapn>
+                    <input type="date" class="endDate" readonly>
+                </li>
+                <li>
+                    <input type="button" class="searchBtn" value="검색">
+                </li>
+            </ul>
+        </div>
+        <div class="camp">
+            <div class="campSubject">
+            </div>
+            <div class="campContent">
+            </div>
+        </div>
+        <div class="pension">
+            <div class="pensionSubject">
+                <span>펜션</span>
+            </div>
+            <div class="pensionContent">
+            </div>
+        </div>
+    </div>
+    <div th:replace="gorilla/fragments/common :: footer"></div>
+</div>
+<script>
+    $(function () {
+        var golbalVar = {
+            searchUrl: "/api/v1/v/searchReservation", // 예약 목록
+            roomUrl: "/gorilla/reservation/roomReservation_view",
+            today: ""
+        }
+        init();
+
+        function init() {
+            initCode();
+            initView();
+            initSearch();
+        }
+
+        function initCode() {
+
+        }
+
+        function initView(list) {
+            // 입실 일 오늘로 설정
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = ('0' + (today.getMonth() + 1)).slice(-2);
+            let day = ('0' + today.getDate()).slice(-2);
+            golbalVar.today = year + '-' + month + '-' + day;
+            $(".startDate").val(golbalVar.today);
+            $(".endDate").val(golbalVar.today.substr(0, 8) + (golbalVar.today.substr(8, 8) * 1 + 1));
+            if (list === undefined) {
+                let defaultComment = '<span class="list">숙박하실 기간을 설정 후 검색해주세요</span>';
+                $(".pensionContent").append(defaultComment);
+            } else {
+                $(".pensionContent").empty();
+                let pensionList = "";
+                $.each(list, function (idx, data) {
+                    if (idx % 2 === 0) {
+                        pensionList += '<span data-room_num=' + data.roomNum + '>' + data.roomName + '</span>';
+                    } else {
+                        pensionList += '<span data-room_num=' + data.roomNum + '>' + data.roomName + '</span></br>';
+                    }
+                })
+
+                // TODO 예약 가능 방이 홀 수 일 경우 css 고려하기
+                /*if (list.length % 2 === 1) {
+                    pensionList += (pensionList.substr(0, pensionList.lastIndexOf("</br>") - 1))+"<span></span>";
+                    debugger
+                }*/
+
+                $(".pensionContent").append(pensionList);
+            }
+        }
+
+        function initSearch() {
+
+        }
+
+        /* onEvent */
+        $(".startDate").on("propertychange change keyup paste input", function (e) {
+            $(".startDate").val(e.target.value);
+            $(".endDate").val(e.target.value.substr(0, 8) + (e.target.value.substr(8, 8) * 1 + 1));
+        })
+
+        $(".searchBtn").on("click", function (e) {
+            let startDate = $(".startDate").val();
+            let endDate = $(".endDate").val();
+            // 검색일 세팅
+            if (startDate === "" || endDate === "") {
+                alert("숙박기간을 선택해주세요");
+                return false;
+            }
+
+            if (startDate > endDate) {
+                alert("입실일이 퇴실일보다 큽니다.");
+                return false;
+            }
+
+            if (startDate < golbalVar.today) {
+                alert("입실일은 오늘 날짜보다 적을 수 없습니다.");
+                return false;
+            }
+
+            let data = {
+                startDate: startDate,
+                endDate: endDate
+            }
+            ajaxCall.postCall(golbalVar.searchUrl, data, "json", function (response) {
+                initView(response);
+            });
+        })
+        $(".camp").on("click", function (e) {
+            debugger
+            if (e.target.dataset.room_num === undefined) {
+                return false;
+            } else {
+                let roomName = e.target.innerHTML;
+                let roomNum = e.target.dataset.room_num
+                let startDate = $(".startDate").val();
+                let endDate = $(".endDate").val();
+
+
+                location.href = encodeURI(golbalVar.roomUrl + "?reservationType=camp&roomName=" + roomName + "&+roomNum=" + roomNum + "&startDate=" + startDate + "&endDate=" + endDate);
+            }
+        })
+
+        $(".pension").on("click", function (e) {
+            if (e.target.dataset.room_num === undefined) {
+                return false;
+            } else {
+                let roomName = e.target.innerHTML;
+                let roomNum = e.target.dataset.room_num
+                let startDate = $(".startDate").val();
+                let endDate = $(".endDate").val();
+
+
+                location.href = encodeURI(golbalVar.roomUrl + "?reservationType=pension&roomName=" + roomName + "&roomNum=" + roomNum + "&startDate=" + startDate + "&endDate=" + endDate);
+            }
+        })
+    })
+</script>
+</body>
+</html>

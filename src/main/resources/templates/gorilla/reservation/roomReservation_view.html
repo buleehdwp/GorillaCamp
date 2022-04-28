@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="gorilla/fragments/common :: html-head">
+</head>
+<body>
+<div id="wrap">
+    <div th:replace="gorilla/fragments/common :: header"></div>
+    <div th:replace="gorilla/fragments/common :: nav"></div>
+    <div class="contents">
+        <div class="campReservation">
+            <div class="reservationInfoImage">
+                <span>사진</span>
+            </div>
+        </div>
+        <div class="pensionReservation">
+            <div class="reservationInfoImage">
+                <span>사진</span>
+            </div>
+        </div>
+        <div class="infoReservation">
+            <table class="pensionTable">
+
+            </table>
+            <table class="confirmTable">
+
+            </table>
+        </div>
+    </div>
+    <div th:replace="gorilla/fragments/common :: footer"></div>
+</div>
+<script>
+    $(function () {
+        let golbalVar = {
+            doReservationUrl: "/api/v1/v/doReservation",
+            doCountUrl: "/api/v1/v/doCount",
+            data: {}
+        }
+        init();
+
+        function init() {
+            initCode();
+            initView();
+            initSearch();
+        }
+
+        function initCode() {
+        }
+
+        function initView(list) {
+            let roomInfo = (decodeURI(location.href).split("?")[1]).split("&");
+            $.each(roomInfo, function (idx, info) {
+                let KV = info.split("=");
+                golbalVar.data[KV[0]] = KV[1];
+            })
+            if (golbalVar.data.type === "camp") {
+                campReservation(golbalVar.data);
+            } else {
+                pensionReservation(golbalVar.data);
+            }
+        }
+
+        function initSearch() {
+
+        }
+
+        // 캠핑 예약 정보
+        function campReservation(data) {
+            $(".pensionReservation").hide();
+        }
+
+        // 펜션 예약 정보 (개발 환경 -> 이름, 전화번호 선 입력)
+        function pensionReservation(data) {
+            $(".campReservation").hide();
+            let defaultInfo = "" +
+                "<tr><th>방 이름</th><td>" + data.roomName + "</td></tr><tr><th>방 번호</th><td>" + data.roomNum + "</td></tr>" +
+                "<tr><th>입실일/퇴실일</th><td>" + data.startDate + "/" + data.endDate + "</td></tr>" +
+                "<tr><th>예약자 성명</th><td><input type='text' class='reservationName' value='홍길동'></td></tr>" +
+                "<tr><th>예약자 전화번호</th><td><input type='text' class='reservationPhoneNum' value='01099999999' placeholder='-없이 번호만 입력해주세요'></td></tr>" +
+                "<tr><th>인원</th><td><button type='button' class='minus' value='-'>-</button><input type='number' class='numberPersonnel' value='0'><button type='button' class='plus' value='+'>+</button></td></tr>" +
+                "<tr><td colspan='2'><input type='button' class='confirmBtn' value='에약 확인'></td></tr>"
+            $(".pensionTable").append(defaultInfo);
+        }
+
+
+        /* onEvent */
+        // 인원수
+        $(".pensionTable").on("click", function (e) {
+            let target = $(e.target).attr("class");
+            let numberPersonnel = $(".numberPersonnel").val();
+            if (target === 'minus') {
+                if (numberPersonnel === '0') {
+                    return false
+                } else {
+                    $(".numberPersonnel").val((numberPersonnel * 1) - 1);
+                }
+            } else if (target === 'plus') {
+                if (numberPersonnel === '4') {
+                    return false
+                } else {
+                    $(".numberPersonnel").val((numberPersonnel * 1) + 1);
+                }
+            } else if (target === 'confirmBtn') {
+                confirmReservation()
+            }
+        })
+
+        // 예약 확인 -> 예약 금액 확인
+        function confirmReservation() {
+            let numberPersonnel = $(".numberPersonnel").val();
+            if(numberPersonnel==="0"){
+                alert("예약 인원을 선택해주세요(최대 4인)")
+                return false;
+            }
+
+            let data = {
+                startDate: golbalVar.data.startDate,
+                reservationPersonnel: numberPersonnel
+            }
+
+            ajaxCall.postCall(golbalVar.doCountUrl, data, "json", function (response) {
+                let confirmTable = $(".confirmTable")
+                if (confirmTable.length !== 0) {
+                    confirmTable.empty()
+                }
+                let confirmInfo = "<tr><th>기본금액</th><td>" + response.baseRate + "</td></tr>"
+                if (response.extraCharge !== undefined) {
+                    confirmInfo += "<tr><th>인원추가금액</th><td>" + response.extraCharge + "</td></tr>"
+                }
+                confirmInfo += "<tr><th>총 금액</th><td>" + response.total + "</td></tr><tr><td><input type='button' class='btnReservation' value='예약하기'></td></tr>"
+                confirmTable.append(confirmInfo);
+                return false;
+            });
+        }
+
+        // 예약하기
+        $(".confirmTable").on("click",function(e){
+            let target = $(e.target).attr("class")
+            if(target === 'btnReservation'){
+                golbalVar.data['reservationName'] = $('.reservationName').val()
+                golbalVar.data['reservationPhoneNum'] = $('.reservationPhoneNum').val()
+                golbalVar.data['reservationPersonnel'] = $('.numberPersonnel').val()
+                ajaxCall.postCall(golbalVar.doReservationUrl, golbalVar.data, "json", function (response) {
+                    if(response.code === "0000"){
+                        alert(response.msg)
+                    }else{
+                        alert(response.msg)
+                    }
+                });
+            }
+        })
+    })
+</script>
+</body>
+</html>

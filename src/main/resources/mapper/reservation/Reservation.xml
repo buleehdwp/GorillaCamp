@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gorilla.camp.gorillacamp.reservation.mapper.ReservationMapper">
+    <select id="getReservationList" parameterType="ReservationVo" resultType="ReservationVo">
+        SELECT *
+        FROM RESERVATION_LIST
+        <![CDATA[
+        WHERE TO_DATE(START_DATE) >= TO_DATE(#{startDate})
+          AND TO_DATE(END_DATE) <= TO_DATE(#{endDate})
+        ]]>
+    </select>
+
+    <select id="getRoomList" resultType="PensionRoomVo">
+        SELECT *
+        FROM PENSIONROOM
+    </select>
+
+    <insert id="doReservation" parameterType="ReservationVo">
+        insert into RESERVATION_LIST(ROOM_NUM, ROOM_NAME, RESERVATION_NAME, RESERVATION_PHONE_NUM,
+                                     RESERVATION_PERSONNEL, RESERVATION_TYPE, START_DATE, END_DATE, RESERVATION_DATE, STATUS)
+        values (#{roomNum}, #{roomName}, #{reservationName}, #{reservationPhoneNum}, #{reservationPersonnel},
+                #{reservationType}, #{startDate}, #{endDate}, sysdate, 'Y')
+    </insert>
+</mapper>
